@@ -184,7 +184,67 @@ void pre_auton(void) {
 
 void autonomous(void) {
 
+  moveForward(2.0);
+  wait(1, sec);
 
+  turnPID(90);
+  wait(1, sec);
+
+  moveBack(1.0);
+  wait(1, sec);
+
+  flywheelRampUp(75, 10);
+
+  moveForward(3.0);
+  wait(1, sec);
+
+  turnPID(-45);
+  wait(1, sec);
+
+  moveBack(2.0);
+  wait(1, sec);
+
+  flywheelRampUp(50, 4);
+
+  turnPID(180);
+  wait(1, sec);
+
+  moveForward(1.5);
+  wait(1, sec);
+
+  moveForward(1.5);
+  wait(1, sec);
+
+  turnPID(45);
+  wait(1, sec);
+
+  moveForward(2.0);
+  wait(1, sec);
+
+  flywheelRampUp(70, 2);
+
+  turnPID(-90);
+  wait(1, sec);
+
+  moveBack(1.0);
+  wait(1, sec);
+
+  moveForward(3.0);
+  wait(1, sec);
+
+  turnPID(180);
+  wait(1, sec);
+
+  moveBack(2.5);
+  wait(1, sec);
+
+  turnPID(-45);
+  wait(1, sec);
+
+  moveForward(2.0);
+  wait(1, sec);
+
+  flywheelRampUp(100, 15);
   
 }
 
