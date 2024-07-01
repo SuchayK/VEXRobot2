@@ -171,8 +171,17 @@ void turnPID(double targetDegrees) {
 
 void absoluteTurn (double targetDegrees) {
   
- double turn = original - targetDegrees;
- turnPID(turn);
+ double currentHeading = gyro.rotation(degrees);
+  double targetHeading = fmod(360 + targetDegrees, 360);
+  double deltaAngle = targetHeading - currentHeading;
+
+    if (deltaAngle < -180) {
+    deltaAngle += 360;
+  } else if (deltaAngle > 180) {
+    deltaAngle -= 360;
+  }
+
+  turnPID(deltaAngle);
 
 }
 
