@@ -3,10 +3,7 @@ using namespace vex;
 
 competition Competition;
 
-motor lift(PORT1, gearSetting::ratio18_1, false);
-digital_out wings(Brain.ThreeWirePort.A);
-digital_out left_wing(Brain.ThreeWirePort.B);
-digital_out right_wing(Brain.ThreeWirePort.C);
+double original;
 
 void moveForward(double x) {
   right_drive.spinFor(fwd, x, turns, false);
@@ -138,20 +135,25 @@ void moveBack(double targetDistance) {
 
 }
 
+void calibrateIMU() {
+  gyro.calibrate();
+  while (gyro.isCalibrating()) {
+    wait(100, msec);
+  }
+}
+
 void turnPID(double targetDegrees) {
-  double kP = 0.08;
-  double kI = 0.01;
-  double kD = 0.0075;
+  double kP = 0.6;
+  double kI = 0.04;
+  double kD = 0.3;
   double error = targetDegrees;
   double previousError = 0;
   double integral = 0;
   double derivative;
   double motorPower;
 
-  inertial.resetRotation();
-
   while (fabs(error) > 1) {
-    error = targetDegrees - inertial.rotation(degrees);
+    error = targetDegrees - gyro.rotation(degrees);
     integral += error;
     derivative = error - previousError;
     motorPower = (kP * error) + (kI * integral) + (kD * derivative);
@@ -165,7 +167,13 @@ void turnPID(double targetDegrees) {
 
   left_drive.stop();
   right_drive.stop();
-  updateOdometry();
+}
+
+void absoluteTurn (double targetDegrees) {
+  
+ double turn = original - targetDegrees;
+ turnPID(turn);
+
 }
 
 void setLeftWing(bool state) {
@@ -247,6 +255,9 @@ void pre_auton(void) {
   left_drive.setStopping(brake);
   right_drive.setVelocity(40, pct);
   left_drive.setVelocity(40, pct);
+
+  original = gyro.rotation(degrees);
+
 }
 
 void autonomous(void) {
