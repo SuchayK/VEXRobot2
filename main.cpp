@@ -154,6 +154,25 @@ void setRightWing(bool state) {
   wings.right_wing.set(state);
 }
 
+void flywheelRampUp(double targetSpeed, double rampTime) {
+  double currentSpeed = 0;
+  double rampIncrement = targetSpeed / (rampTime * 1000 / 20); 
+
+  while (currentSpeed < targetSpeed) {
+    flywheel.spin(fwd, currentSpeed, pct);
+    currentSpeed += rampIncrement;
+    wait(20, msec);
+  }
+
+  flywheel.spin(fwd, targetSpeed, pct);
+
+  while (!Controller1.ButtonA.pressing()) {
+    wait(20, msec);
+  }
+
+  flywheel.stop();
+}
+
 void pre_auton(void) {
   vexcodeInit();
 
