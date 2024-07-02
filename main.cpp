@@ -169,21 +169,34 @@ void turnPID(double targetDegrees) {
   right_drive.stop();
 }
 
-void absoluteTurn (double targetDegrees) {
-  
- double currentHeading = gyro.rotation(degrees);
+void turnLeftAbsolute(double targetDegrees) {
+  double currentHeading = gyro.rotation(degrees);
   double targetHeading = fmod(360 + targetDegrees, 360);
   double deltaAngle = targetHeading - currentHeading;
 
-    if (deltaAngle < -180) {
+  if (deltaAngle < -180) {
     deltaAngle += 360;
   } else if (deltaAngle > 180) {
     deltaAngle -= 360;
   }
 
   turnPID(deltaAngle);
-
 }
+
+void turnRightAbsolute(double targetDegrees) {
+  double currentHeading = gyro.rotation(degrees);
+  double targetHeading = fmod(360 + targetDegrees, 360);
+  double deltaAngle = targetHeading - currentHeading;
+
+  if (deltaAngle < -180) {
+    deltaAngle += 360;
+  } else if (deltaAngle > 180) {
+    deltaAngle -= 360;
+  }
+
+  turnPID(deltaAngle);
+}
+
 
 void setLeftWing(bool state) {
   wings.left_wing.set(state);
