@@ -284,15 +284,23 @@ void pre_auton(void) {
 
 void autonomous(void) {
 
-    calibrateIMU();
+  calibrateIMU();
 
   moveForward(1.5);
+  wait(1, sec);
+  wings.set(true);
+  wait(1, sec);
+  wings.set(false);
   wait(1, sec);
 
   turnLeftAbsolute(45);
   wait(1, sec);
+  wings.set(true);
+  wait(1, sec);
 
   moveForward(2.0);
+  wait(1, sec);
+  wings.set(false);
   wait(1, sec);
 
   flywheelRampUp(70, 2);
@@ -305,11 +313,19 @@ void autonomous(void) {
 
   moveForward(3.0);
   wait(1, sec);
+  wings.set(true);
+  wait(1, sec);
+  wings.set(false);
+  wait(1, sec);
 
   turnRightAbsolute(180);
   wait(1, sec);
+  wings.set(true);
+  wait(1, sec);
 
   flywheelRampUp(60, 1.5);
+  wings.set(false);
+  wait(1, sec);
 
   moveBack(2.5);
   wait(1, sec);
@@ -352,6 +368,10 @@ void autonomous(void) {
 
   moveForward(3.5);
   wait(1, sec);
+  wings.set(true);
+  wait(1, sec);
+  wings.set(false);
+  wait(1, sec);
 
   turnRightAbsolute(270);
   wait(1, sec);
@@ -377,6 +397,30 @@ void autonomous(void) {
   wait(1, sec);
 
   flywheelRampUp(60, 1.5);
+
+  moveBack(1.0);
+  wait(1, sec);
+
+  turnLeftAbsolute(270);
+  wait(1, sec);
+
+  moveForward(2.0);
+  wait(1, sec);
+  wings.set(true);
+  wait(1, sec);
+  wings.set(false);
+  wait(1, sec);
+
+  moveBack(2.0);
+  wait(1, sec);
+
+  turnRightAbsolute(180);
+  wait(1, sec);
+
+  moveForward(1.5);
+  wait(1, sec);
+
+  flywheelRampUp(70, 2);
   
 }
 
