@@ -421,15 +421,55 @@ void autonomous(void) {
   wait(1, sec);
 
   flywheelRampUp(70, 2);
+
+  moveForward(1.0);
+  wait(1, sec);
+
+  turnRightAbsolute(90);
+  wait(1, sec);
+
+  wings.set(true);
+  wait(1, sec);
+  wings.set(false);
+  wait(1, sec);
+
+  moveBack(3.0);
+  wait(1, sec);
+
+  turnLeftAbsolute(0);
+  wait(1, sec);
+
+  moveForward(2.5);
+  wait(1, sec);
+
   
 }
 
 void usercontrol(void) {
+
   while (true) {
+
     left_drive.spin(fwd, Controller1.Axis3.position(pct), pct);
     right_drive.spin(fwd, Controller1.Axis2.position(pct), pct);
+
+    if (Controller1.ButtonL1.pressing()) {
+      flywheel.spin(fwd, 100, pct);
+    } else if (Controller1.ButtonL2.pressing()) {
+      flywheel.stop();
+    } else if (Controller.ButtonA.pressing()) {
+      flywheel.spin(reverse, 100, pct);
+    }
+
+    if (Controller1.ButtonR1.pressing()) {
+      wings.set(true);
+    } else if (Controller1.ButtonR2.pressing()) {
+      wings.set(false);
+    }
+
     wait(20, msec);
+
   }
+
 }
 
 int main() {
